@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+ name: readme-gitclone-pipelinerun
+spec:
+ pipelineRef:
+   name: readme-gitclone
+ workspaces:
+   - name: shared-data
+     volumeClaimTemplate:
+       spec:
+         accessModes:
+           - ReadWriteOnce
+         resources:
+           requests:
+             storage: 1Gi
+ params:
+   - name: repo-url
+     value: https://github.com/tektoncd/pipeline.git
+   - name: branch-name
+     value: release-v0.12.x
